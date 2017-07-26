@@ -163,7 +163,9 @@ function sendMedia(appointment) {
 				],
 				"FacilityCode": null
 			},
-			"Patient": appointment.PatientIdentifiers,
+			"Patient": {
+				"Identifiers": appointment.PatientIdentifiers
+			},
 			"Media": {
 				"FileType": "JPG",
 				"FileName": "SampleImage",
