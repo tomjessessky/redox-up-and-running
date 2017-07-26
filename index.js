@@ -3,9 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
 
-var DESTINATION_VERIFICATION_TOKEN = 'abcd1234';
-var SOURCE_API_KEY = '91d0aa87-1487-4539-bc62-16bedb0e9b99';
-var SOURCE_SECRET = 'Ieqdw6Jf5khZSygXbWw48n8Qm0OMZak1jKqzsURrJ4xoTs7IoltmaPKe23sL5ZepONEyXr8F';
+var DESTINATION_VERIFICATION_TOKEN = 'REPLACE_THIS';
+var SOURCE_API_KEY = 'REPLACE_THIS';
+var SOURCE_SECRET = 'REPLACE_THIS';
 var authToken, authTokenExpires;
 
 var lowdb = require('lowdb');
