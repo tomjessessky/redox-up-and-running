@@ -5,6 +5,12 @@ var request = require('request');
 
 var DESTINATION_VERIFICATION_TOKEN = 'abcd1234';
 
+var lowdb = require('lowdb');
+var db = lowdb('db.json');
+
+db.defaults({ appointments: [] })
+	.write();
+
 app.use(bodyParser.json());
 
 app.listen(80, function () {
@@ -26,9 +32,34 @@ app.get('/destination', function (req, res) {
 });
 
 app.post('/destination', function (req, res) {
-	console.log(req.body);
+	if (req.body.Meta.DataModel === 'Scheduling' && req.body.Meta.EventType === 'New') {
+		console.log('Scheduling message received!');
+
+		var appointment = {
+			PatientFirstName: req.body.Patient.Demographics.FirstName,
+			PatientLastName: req.body.Patient.Demographics.LastName,
+			PatientIdentifiers: req.body.Patient.Identifiers,
+			VisitDateTime: req.body.Visit.VisitDateTime,
+			VisitReason: req.body.Visit.Reason,
+			ProviderFirstName: req.body.Visit.AttendingProvider.FirstName,
+			ProviderLastName: req.body.Visit.AttendingProvider.LastName,
+			ProviderID: req.body.Visit.AttendingProvider.ID
+		};
+
+		db.get('appointments')
+			.push(appointment)
+			.write();
+	}
+
 	res.sendStatus(200);
 });
+
+app.get('/appointments', function (req, res) {
+	var appointments = db.get('appointments').value();
+	res.send(appointments);
+});
+
+
 
 
 
