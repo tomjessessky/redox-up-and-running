@@ -1,7 +1,7 @@
 # Sample Code from Up and Running with the Redox API in 15 Minutes Video  
-This is the sample code used in [the demo video I made](https://www.youtube.com/watch?v=Ym8DHp-mnd0) for using the Redox API and the Redox Dev Tools. 
+This is the sample code used in [the demo video I made](https://www.youtube.com/watch?v=4_CURkT_fCo) for using the Redox API and the Redox Dev Tools. 
 
-## [Click here to see the demo video](https://www.youtube.com/watch?v=Ym8DHp-mnd0)
+## [Click here to see the demo video](https://www.youtube.com/watch?v=4_CURkT_fCo)
 
 **A Note About the Video**  
 In the video I used a Digital Ocean droplet server running NodeJS. 
