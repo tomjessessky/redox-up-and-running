@@ -29,6 +29,8 @@
     app.controller('myCtrl', function($scope, $http, $timeout) {
       $scope.error = "";
       $scope.success = "";
+      $scope.instructions = "";
+      $scope.reasons = "";
 
       $http.get('/api/scheduling').then(function success(response) {
         $scope.scheduling = response.data;
@@ -39,7 +41,7 @@
         }, 10000);
       }); 
 
-      $scope.sendUpdate = function () {
+      $scope.sendUpdate = function (reason, instructions) {
         var update = {
           Patient: {
             Identifiers: $scope.scheduling.Patient.Identifiers
@@ -47,8 +49,8 @@
           Visit: {
             VisitNumber: $scope.scheduling.Visit.VisitNumber,
             PatientClass: $scope.scheduling.Visit.PatientClass,
-            Reason: $scope.reason,
-            Instructions: [$scope.instructions]
+            Reason: reason,
+            Instructions: [instructions]
           }
         };
         $http.post('/api/visitupdate', update).then(function success(response) {
@@ -84,14 +86,14 @@
         <h2>{{ scheduling.Patient.Demographics.LastName }}, {{ scheduling.Patient.Demographics.FirstName }} <small>{{ scheduling.Patient.Demographics.DOB }}</small></h2>
 
         <!-- Fake email sent to patient, button to check in VisitID from scheduling -->
-        <form ng-submit="sendUpdate()">
+        <form ng-submit="sendUpdate(reason, instructions)">
           <div class="form-group">
             <label for="visitreason">Visit Reason</label>
-            <input type="test" class="form-control" id="visitreason" placeholder="Tell me where it hurts???">
+            <input ng-model="reason" type="test" class="form-control" id="visitreason" placeholder="Tell me where it hurts???">
           </div>
           <div class="form-group">
             <label for="visitinstructions">Special Instructions</label>
-            <input type="test" class="form-control" id="visitinstructions" placeholder="Please warm the towel.">
+            <input ng-model="instructions" type="test" class="form-control" id="visitinstructions" placeholder="Please warm the towel.">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
