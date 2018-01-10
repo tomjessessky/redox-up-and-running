@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 	res.send('Hello, World!');
 });
 
-app.get('/destination', function (req, res) {
+app.get('/api', function (req, res) {
 	if (req.headers['verification-token'] === DESTINATION_VERIFICATION_TOKEN) {
 		console.log('verification-token matched!');
 		return res.send(req.query.challenge);
@@ -34,26 +34,27 @@ app.get('/destination', function (req, res) {
 	res.sendStatus(400);
 });
 
-app.post('/destination', function (req, res) {
-	if (_.get(req, 'body.Meta.DataModel') === 'PatientAdmin' && _.get(req, 'body.Meta.EventType') === 'Registration') {
-		console.log('Patient Registration Received');
+app.post('/api/scheduling', function (req, res) {
 
-		var appointment = {
-			PatientFirstName: req.body.Patient.Demographics.FirstName,
-			PatientLastName: req.body.Patient.Demographics.LastName,
-			PatientIdentifiers: req.body.Patient.Identifiers,
-			VisitDateTime: req.body.Visit.VisitDateTime,
-			VisitReason: req.body.Visit.Reason,
-			ProviderFirstName: req.body.Visit.AttendingProvider.FirstName,
-			ProviderLastName: req.body.Visit.AttendingProvider.LastName,
-			ProviderID: req.body.Visit.AttendingProvider.ID
-		};
-
-		db.get('appointments')
-			.push(appointment)
-			.write();
-
+	if (req.headers['verification-token'] !== DESTINATION_VERIFICATION_TOKEN) {
+		console.log('Bad verification token.');
+		return res.sendStatus(403);
 	}
+
+	if (!_.get(req, 'body.Meta.DataModel') === 'Scheduling' ||
+		!_.get(req, 'body.Meta.EventType') === 'New') {
+		res.sendStatus(400);
+	}
+
+	console.log('Patient Registration Received');
+
+	db.get('appointments')
+		.push(_.get(req, 'body'))
+		.write();
+
+	const patientEmail = _.get(req, 'body.Patient.Demographics.EmailAddresses[0]');
+	const patientPhone = _.get(req, 'body.Patient.Demographics.PhoneNumber.Mobile');
+	console.log(`Texting patient at ${patientPhone} and emailing patient at ${patientEmail}`);
 
 	res.sendStatus(200);
 });
@@ -62,7 +63,6 @@ app.get('/appointments', function (req, res) {
 	var appointments = db.get('appointments').value();
 	res.send(appointments);
 });
-
 
 function getAuthToken(callback) {
 	if (authToken && Date.now() < new Date(authTokenExpires).getTime()) {
@@ -76,7 +76,7 @@ function getAuthToken(callback) {
 			body: {
 				apiKey: SOURCE_API_KEY,
 				secret: SOURCE_SECRET
-			}, 
+			},
 			headers: {
 				'Content-Type': 'application/json'
 			},
