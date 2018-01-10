@@ -14,14 +14,25 @@ var db = lowdb('db.json');
 
 db.defaults({ appointments: [] }).write();
 
+db._.mixin({ last: (array) => array[array.length - 1] });
+
 app.use(bodyParser.json());
 
 app.listen(3000, function () {
 	console.log('Server started. Listening on port 3000.');
 });
 
-app.get('/', function (req, res) {
-	res.send('Hello, World!');
+app.get('/', (req, res) => {
+	res.sendFile('./index.html');
+});
+
+app.get('api/scheduling', (req, res) => {
+	const appointments = db.get('appointments').last().value();
+	res.send(appointments);
+});
+
+app.post('api/visitupdate', (req, res) => {
+
 });
 
 app.get('/api', function (req, res) {
