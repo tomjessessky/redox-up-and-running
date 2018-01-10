@@ -32,6 +32,43 @@ app.get('api/scheduling', (req, res) => {
 });
 
 app.post('api/visitupdate', (req, res) => {
+	getAuthToken(toke => {
+		var options = {
+			url: 'https://api.redoxengine.com/query',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + toke
+			},
+			json: true,
+			body: {
+				Meta: {
+					DataModel: "Clinical Summary",
+					EventType: "PatientQuery",
+					EventDateTime: "2017-07-26T04:46:01.868Z",
+					Test: true,
+					Destinations: [{
+						ID: "ef9e7448-7f65-4432-aa96-059647e9b357",
+						Name: "Patient Query Endpoint"
+					}]
+				},
+				Patient: {
+					Identifiers: appointment.PatientIdentifiers
+				}
+			}
+		};
+
+		request.post(options, function (err, response, body) {
+			console.log('ClinicalSummary:');
+			console.log(err);
+			console.log(response.statusCode);
+			console.log(body.Meta.DataModel + " was received");
+
+			sendMedia(appointment);
+		})
+	});
+
+
 
 });
 
