@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && node index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "6.12.1"
   },
   "keywords": [],
   "author": "",
@@ -16,5 +19,9 @@
     "lowdb": "^0.16.2",
     "request": "^2.81.0",
     "lodash": "^4.17.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:100health/hackathon-check-in.git"
   }
 }
