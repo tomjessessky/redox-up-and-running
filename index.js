@@ -18,7 +18,7 @@ db._.mixin({ last: (array) => array[array.length - 1] });
 
 app.use(bodyParser.json());
 
-app.listen(3000, function () {
+app.listen(process.env.PORT || 3000, function () {
 	console.log('Server started. Listening on port 3000.');
 });
 
