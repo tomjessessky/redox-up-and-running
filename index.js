@@ -94,7 +94,7 @@ db.defaults({
 			"VisitNumber": "1234",
 			"AccountNumber": null,
 			"VisitDateTime": "2018-01-10T03:40:16.525Z",
-			"PatientClass": null,
+			"PatientClass": "Outpatient",
 			"Status": null,
 			"Duration": 15,
 			"Reason": "Check up",
