@@ -243,6 +243,7 @@ app.get('/api/scheduling', (req, res) => {
 app.post('/api/visitupdate', (req, res) => {
 	const Patient = _.get(req, 'body.Patient');
 	const Visit = _.get(req, 'body.Visit');
+	Visit['PatientClass'] = Visit['PatientClass'] || 'Outpatient';
 
 	getAuthToken(toke => {
 		var options = {
