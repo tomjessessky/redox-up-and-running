@@ -29,6 +29,8 @@
     app.controller('myCtrl', function($scope, $http, $timeout) {
       $scope.error = "";
       $scope.success = "";
+      $scope.instructions = "";
+      $scope.reasons = "";
 
       $http.get('/api/scheduling').then(function success(response) {
         $scope.scheduling = response.data;
@@ -39,7 +41,7 @@
         }, 10000);
       }); 
 
-      $scope.sendUpdate = function () {
+      $scope.sendUpdate = function (reason, instructions) {
         var update = {
           Patient: {
             Identifiers: $scope.scheduling.Patient.Identifiers
@@ -47,8 +49,8 @@
           Visit: {
             VisitNumber: $scope.scheduling.Visit.VisitNumber,
             PatientClass: $scope.scheduling.Visit.PatientClass,
-            Reason: $scope.reason,
-            Instructions: [$scope.instructions]
+            Reason: reason,
+            Instructions: [instructions]
           }
         };
         $http.post('/api/visitupdate', update).then(function success(response) {
@@ -60,7 +62,43 @@
       }      
     });
   </script>
+  <script>
+  $(document).ready(function(){
+    animateDivFlag();
+    animateDivInn();
 
+});
+
+function makeNewPosition(){
+
+    // Get viewport dimensions (remove the dimension of the div)
+    var h = $(window).height() - 50;
+    var w = $(window).width() - 50;
+
+    var nh = Math.floor(Math.random() * h);
+    var nw = Math.floor(Math.random() * w);
+    
+    return [nh,nw];
+
+}
+
+function animateDivFlag(){
+    var newq = makeNewPosition();
+    $('#flag').animate({ top: newq[0], left: newq[1]}, ((Math.random()+1)*5000), function(){
+      animateDivFlag();
+    });
+
+};
+function animateDivInn(){
+    var newq = makeNewPosition();
+    $('#inn').animate({ top: newq[0], left: newq[1]}, ((Math.random()+1)*5000), function(){
+      animateDivInn();
+    });
+
+};
+  </script>
+
+    
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
@@ -82,22 +120,22 @@
       <div ng-if="scheduling">
         <!-- Scheduling.New (most recent) Info from Redox GET /api/scheduling --> 
         <h2>{{ scheduling.Patient.Demographics.LastName }}, {{ scheduling.Patient.Demographics.FirstName }} <small>{{ scheduling.Patient.Demographics.DOB }}</small></h2>
-
+        <p>Appointment Date/Time: {{scheduling.Visit.VisitDateTime | date:'medium'}}</p>
         <!-- Fake email sent to patient, button to check in VisitID from scheduling -->
-        <form ng-submit="sendUpdate()">
+        <form ng-submit="sendUpdate(reason, instructions)">
           <div class="form-group">
             <label for="visitreason">Visit Reason</label>
-            <input type="test" class="form-control" id="visitreason" placeholder="Tell me where it hurts???">
+            <input ng-model="reason" type="test" class="form-control" id="visitreason" placeholder="Tell me where it hurts???">
           </div>
           <div class="form-group">
             <label for="visitinstructions">Special Instructions</label>
-            <input type="test" class="form-control" id="visitinstructions" placeholder="Please warm the towel.">
+            <input ng-model="instructions" type="test" class="form-control" id="visitinstructions" placeholder="Please warm the towel.">
           </div>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
       </div>
     </div>
-    <img src="https://www.clipartmasters.com/clip-arts/697/log-house-clip-art-697288.png" class="fix"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/255px-Flag_of_the_Czech_Republic.svg.png" class="fix"/>
-  </body>
+        <img src="https://i.pinimg.com/474x/65/05/7b/65057bce94c9ef7761abab9d92e7fb49--building-design-d-art.jpg" id="inn" class="fix"/>
+   <img src="https://www.worldatlas.com/r/w300-h175-c300x175/upload/60/d5/9b/untitled-design-159.jpg" id="flag" class="fix"/>
+   </body>
 </html>
