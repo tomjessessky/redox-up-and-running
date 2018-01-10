@@ -120,7 +120,7 @@ function animateDivInn(){
       <div ng-if="scheduling">
         <!-- Scheduling.New (most recent) Info from Redox GET /api/scheduling --> 
         <h2>{{ scheduling.Patient.Demographics.LastName }}, {{ scheduling.Patient.Demographics.FirstName }} <small>{{ scheduling.Patient.Demographics.DOB }}</small></h2>
-        <p>Appointment Date/Time: {{scheduling.Visit.VisitDateTime}}</p>
+        <p>Appointment Date/Time: {{scheduling.Visit.VisitDateTime | date:'medium'}}</p>
         <!-- Fake email sent to patient, button to check in VisitID from scheduling -->
         <form ng-submit="sendUpdate(reason, instructions)">
           <div class="form-group">
