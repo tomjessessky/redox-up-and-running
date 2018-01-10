@@ -94,7 +94,7 @@ db.defaults({
 			"VisitNumber": "1234",
 			"AccountNumber": null,
 			"VisitDateTime": "2018-01-10T03:40:16.525Z",
-			"PatientClass": null,
+			"PatientClass": "Outpatient",
 			"Status": null,
 			"Duration": 15,
 			"Reason": "Check up",
@@ -243,6 +243,7 @@ app.get('/api/scheduling', (req, res) => {
 app.post('/api/visitupdate', (req, res) => {
 	const Patient = _.get(req, 'body.Patient');
 	const Visit = _.get(req, 'body.Visit');
+	Visit['PatientClass'] = Visit['PatientClass'] || 'Outpatient';
 
 	getAuthToken(toke => {
 		var options = {
