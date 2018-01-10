@@ -18,5 +18,9 @@
   },
   "dependencies": {
     "lodash": "^4.17.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:100health/hackathon-check-in.git"
   }
 }
