@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var request = require('request');
+var path = require('path');
 var _ = require('lodash');
 
 var DESTINATION_VERIFICATION_TOKEN = 'REPLACE_THIS';
@@ -23,15 +24,15 @@ app.listen(process.env.PORT || 3000, function () {
 });
 
 app.get('/', (req, res) => {
-	res.sendFile('./index.html');
+	res.sendFile(path.join(__dirname, './index.html'));
 });
 
-app.get('api/scheduling', (req, res) => {
+app.get('/api/scheduling', (req, res) => {
 	const appointments = db.get('appointments').last().value();
 	res.send(appointments);
 });
 
-app.post('api/visitupdate', (req, res) => {
+app.post('/api/visitupdate', (req, res) => {
 	const Patient = _.get(req, 'body.Patient');
 	const Visit = _.get(req, 'body.Visit');
 
