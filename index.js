@@ -241,8 +241,6 @@ app.get('/api/scheduling', (req, res) => {
 });
 
 app.post('/api/visitupdate', (req, res) => {
-	console.log(req.body);
-	console.log(req.body);
 
 	const Patient = _.get(req, 'body.Patient');
 	const Visit = _.get(req, 'body.Visit');
