@@ -32,7 +32,41 @@ app.get('api/scheduling', (req, res) => {
 });
 
 app.post('api/visitupdate', (req, res) => {
+	const Patient = _.get(req, 'body.Patient');
+	const Visit = _.get(req, 'body.Visit');
 
+	getAuthToken(toke => {
+		var options = {
+			url: 'https://api.redoxengine.com/query',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer ' + toke
+			},
+			json: true,
+			body: {
+				Meta: {
+					DataModel: "PatientAdmin",
+					EventType: "VisitUpdate",
+					EventDateTime: new Date().toISOString(),
+					Test: true,
+				},
+				Patient,
+				Visit
+			}
+		};
+
+		request.post(options, function (err, response, body) {
+			if (err) {
+				console.log(err);
+				res.status(500).send(err);
+			}
+
+			console.log(response.statusCode);
+			console.log(body.Meta.DataModel + " was received");
+			res.send('neat');
+		});
+	});
 });
 
 app.get('/api', function (req, res) {
