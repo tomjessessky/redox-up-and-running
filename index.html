@@ -64,7 +64,8 @@
   </script>
   <script>
   $(document).ready(function(){
-    animateDiv();
+    animateDivFlag();
+    animateDivInn();
 
 });
 
@@ -81,10 +82,17 @@ function makeNewPosition(){
 
 }
 
-function animateDiv(){
+function animateDivFlag(){
     var newq = makeNewPosition();
-    $('.fix').animate({ top: newq[0], left: newq[1] }, function(){
-      animateDiv();
+    $('#flag').animate({ top: newq[0], left: newq[1]}, ((Math.random()+1)*5000), function(){
+      animateDivFlag();
+    });
+
+};
+function animateDivInn(){
+    var newq = makeNewPosition();
+    $('#inn').animate({ top: newq[0], left: newq[1]}, ((Math.random()+1)*5000), function(){
+      animateDivInn();
     });
 
 };
@@ -127,7 +135,7 @@ function animateDiv(){
         </form>
       </div>
     </div>
-    <img src="https://www.clipartmasters.com/clip-arts/697/log-house-clip-art-697288.png" class="fix"/>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Flag_of_the_Czech_Republic.svg/255px-Flag_of_the_Czech_Republic.svg.png" class="fix"/>
-  </body>
+        <img src="https://i.pinimg.com/474x/65/05/7b/65057bce94c9ef7761abab9d92e7fb49--building-design-d-art.jpg" id="inn" class="fix"/>
+   <img src="https://www.worldatlas.com/r/w300-h175-c300x175/upload/60/d5/9b/untitled-design-159.jpg" id="flag" class="fix"/>
+   </body>
 </html>
