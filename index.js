@@ -80,7 +80,7 @@ app.get('/api', function (req, res) {
 	res.sendStatus(400);
 });
 
-app.post('/api/scheduling', function (req, res) {
+app.post('/api', function (req, res) {
 
 	if (req.headers['verification-token'] !== DESTINATION_VERIFICATION_TOKEN) {
 		console.log('Bad verification token.');
