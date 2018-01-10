@@ -5,9 +5,9 @@ var request = require('request');
 var path = require('path');
 var _ = require('lodash');
 
-var DESTINATION_VERIFICATION_TOKEN = 'REPLACE_THIS';
-var SOURCE_API_KEY = 'REPLACE_THIS';
-var SOURCE_SECRET = 'REPLACE_THIS';
+var DESTINATION_VERIFICATION_TOKEN = process.env.DESTINATION_VERIFICATION_TOKEN;
+var SOURCE_API_KEY = process.env.SOURCE_API_KEY;
+var SOURCE_SECRET = process.env.SOURCE_SECRET;
 var authToken, authTokenExpires;
 
 var lowdb = require('lowdb');
