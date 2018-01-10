@@ -4,15 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "6.12.1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "lowdb": "^0.16.2",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "lodash": "^4.17.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:100health/hackathon-check-in.git"
   }
 }
