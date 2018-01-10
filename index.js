@@ -13,7 +13,215 @@ var authToken, authTokenExpires;
 var lowdb = require('lowdb');
 var db = lowdb('db.json');
 
-db.defaults({ appointments: [] }).write();
+db.defaults({ 
+	appointments: [{
+		"Meta": {
+			"DataModel": "Scheduling",
+			"EventType": "New",
+			"EventDateTime": "2018-01-09T05:35:18.024Z",
+			"Test": true,
+			"Destinations": [
+				{
+					"ID": "af394f14-b34a-464f-8d24-895f370af4c9",
+					"Name": "Redox EMR"
+				}
+			],
+			"FacilityCode": null
+		},
+		"Patient": {
+			"Identifiers": [
+				{
+					"ID": "0000000002",
+					"IDType": "MR"
+				},
+				{
+					"ID": "81ac9647-3a07-46b7-85b4-c5d09099fb3b",
+					"IDType": "EHRID"
+				},
+				{
+					"ID": "ffc486eff2b04b8^^^&1.3.6.1.4.1.21367.2005.13.20.1000&ISO",
+					"IDType": "NIST"
+				}
+			],
+			"Demographics": {
+				"FirstName": "Barbara",
+				"MiddleName": null,
+				"LastName": "Bixby",
+				"DOB": "1982-07-24",
+				"SSN": "202-02-0002",
+				"Sex": "Female",
+				"Race": "White",
+				"IsHispanic": null,
+				"MaritalStatus": "Married",
+				"IsDeceased": null,
+				"DeathDateTime": null,
+				"PhoneNumber": {
+					"Home": "+18088675303",
+					"Office": "+17077543758",
+					"Mobile": "+19189368865"
+				},
+				"EmailAddresses": [
+					"barb.bixby@test.net"
+				],
+				"Language": "en",
+				"Citizenship": [],
+				"Address": {
+					"StreetAddress": "4762 Hickory Street",
+					"City": "Monroe",
+					"State": "WI",
+					"ZIP": "53566",
+					"County": "Green",
+					"Country": "US"
+				}
+			},
+			"Notes": []
+		},
+		"AppointmentInfo": [
+			{
+				"Code": "23457",
+				"Codeset": "Redox EHR Codes",
+				"Description": "Priority",
+				"Value": "Normal"
+			},
+			{
+				"Code": "23457",
+				"Codeset": "Redox EHR Codes",
+				"Description": "Form",
+				"Value": "Lumbar"
+			}
+		],
+		"Visit": {
+			"VisitNumber": "1234",
+			"AccountNumber": null,
+			"VisitDateTime": "2018-01-10T03:40:16.525Z",
+			"PatientClass": null,
+			"Status": null,
+			"Duration": 15,
+			"Reason": "Check up",
+			"Instructions": [],
+			"AttendingProvider": {
+				"ID": "4236464757",
+				"IDType": "NPI",
+				"FirstName": "John",
+				"LastName": "Slate",
+				"Credentials": [
+					"DO"
+				],
+				"Address": {
+					"StreetAddress": "500 First St.",
+					"City": "Clayton",
+					"State": "MO",
+					"ZIP": "63105",
+					"County": "Saint Louis",
+					"Country": "USA"
+				},
+				"Location": {
+					"Type": null,
+					"Facility": null,
+					"Department": null,
+					"Room": null
+				},
+				"PhoneNumber": {
+					"Office": "+13145554321"
+				}
+			},
+			"ConsultingProvider": {
+				"ID": null,
+				"IDType": null,
+				"FirstName": null,
+				"LastName": null,
+				"Credentials": [],
+				"Address": {
+					"StreetAddress": null,
+					"City": null,
+					"State": null,
+					"ZIP": null,
+					"County": null,
+					"Country": null
+				},
+				"Location": {
+					"Type": null,
+					"Facility": null,
+					"Department": null,
+					"Room": null
+				},
+				"PhoneNumber": {
+					"Office": null
+				}
+			},
+			"ReferringProvider": {
+				"ID": "4356789876",
+				"IDType": "NPI",
+				"FirstName": "Pat",
+				"LastName": "Granite",
+				"Credentials": [
+					"MD"
+				],
+				"Address": {
+					"StreetAddress": "123 Main St.",
+					"City": "Madison",
+					"State": "WI",
+					"ZIP": "53703",
+					"County": "Dane",
+					"Country": "USA"
+				},
+				"Location": {
+					"Type": null,
+					"Facility": null,
+					"Department": null,
+					"Room": null
+				},
+				"PhoneNumber": {
+					"Office": "+16085551234"
+				}
+			},
+			"VisitProvider": {
+				"ID": null,
+				"IDType": null,
+				"FirstName": null,
+				"LastName": null,
+				"Credentials": [],
+				"Address": {
+					"StreetAddress": null,
+					"City": null,
+					"State": null,
+					"ZIP": null,
+					"County": null,
+					"Country": null
+				},
+				"Location": {
+					"Type": null,
+					"Facility": null,
+					"Department": null,
+					"Room": null
+				},
+				"PhoneNumber": {
+					"Office": null
+				}
+			},
+			"Location": {
+				"Type": "Inpatient",
+				"Facility": "RES General Hospital",
+				"Department": "3S",
+				"Room": "136"
+			},
+			"Diagnoses": [
+				{
+					"Code": "N39.0",
+					"Codeset": "ICD-10",
+					"Name": "Urinary tract infection, site not specified",
+					"Type": null
+				},
+				{
+					"Code": "L20.84",
+					"Codeset": "ICD-10",
+					"Name": "Intrinsic (allergic) eczema",
+					"Type": null
+				}
+			]
+		}
+	}]
+}).write();
 
 db._.mixin({ last: (array) => array[array.length - 1] });
 
